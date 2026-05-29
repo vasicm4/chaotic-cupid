@@ -1,5 +1,4 @@
 namespace ChaoticCupid.Server.Models;
-;
 
 public class Person
 {
