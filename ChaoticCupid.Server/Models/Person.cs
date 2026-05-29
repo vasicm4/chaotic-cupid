@@ -1,18 +1,17 @@
-namespace DefaultNamespace
+namespace ChaoticCupid.Server.Models;
 ;
 
 public class Person
 {
-    string _username { get; set; }
-    string _city { get; set; }
-    int _age { get; set; }
-    string _phoneNumber { get; set; }
-    
-    public Person(string username, string city, int age, string phoneNumber)
+    public string ConnectionId { get; set; }
+    public string Username { get; set; }
+    public string City { get; set; }
+    public int Age { get; set; }
+    public string Phone { get; set; }
+    public bool IsWaitingForAck { get; set; } = false;
+    public List<string> BlockedUsers { get; set; } = new List<string>();
+
+    public Person()
     {
-        _username = username;
-        _city = city;
-        _age = age;
-        _phoneNumber = phoneNumber;
     }
 }
