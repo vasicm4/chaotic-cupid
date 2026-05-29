@@ -20,7 +20,7 @@ var connection = new HubConnectionBuilder()
 connection.On<string, string, int, string, string>("LetterReceived", (fromUser, city, age, phone, message) =>
 {
     Console.WriteLine("\n========================================");
-    Console.WriteLine("💖 YOU RECEIVED A LOVE LETTER! 💖");
+    Console.WriteLine("YOU RECEIVED A LOVE LETTER!");
     Console.WriteLine($"From: {fromUser}");
     Console.WriteLine($"City: {city}");
     Console.WriteLine($"Age: {age}");
@@ -89,7 +89,7 @@ static int InputNumber(string message, int min, int max)
     while (true)
     {
         Console.Write(message);
-        string input = Console.ReadLine() ?? ""; // Added ?? "" to fix nullable warning
+        string input = Console.ReadLine() ?? "";
         if (int.TryParse(input, out int number))
         {
             if (number >= min && number <= max) return number;
