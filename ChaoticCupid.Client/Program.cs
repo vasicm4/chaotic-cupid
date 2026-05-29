@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.IO;
 
 Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -10,7 +12,7 @@ var configuration = new ConfigurationBuilder()
     
 string serverUrl = configuration["CupidServer:BaseUrl"] ?? "http://localhost:5000/cupid";
 
-connection = new HubConnectionBuilder()
+var connection = new HubConnectionBuilder()
     .WithUrl(serverUrl)
     .WithAutomaticReconnect()
     .Build();
@@ -18,7 +20,7 @@ connection = new HubConnectionBuilder()
 connection.On<string, string, int, string, string>("LetterReceived", (fromUser, city, age, phone, message) =>
 {
     Console.WriteLine("\n========================================");
-    Console.WriteLine("YOU RECEIVED A LOVE LETTER!");
+    Console.WriteLine("💖 YOU RECEIVED A LOVE LETTER! 💖");
     Console.WriteLine($"From: {fromUser}");
     Console.WriteLine($"City: {city}");
     Console.WriteLine($"Age: {age}");
@@ -49,7 +51,7 @@ Console.WriteLine("\nSuccessfully registered with Cupid! Waiting for your soulma
 
 while (true)
 {
-    string input = Console.ReadLine();
+    string input = Console.ReadLine() ?? "";
 
     if (string.IsNullOrWhiteSpace(input))
     {
@@ -71,7 +73,7 @@ while (true)
     }
 }
 
-private static string InputText(string message)
+static string InputText(string message)
 {
     while (true)
     {
@@ -82,16 +84,16 @@ private static string InputText(string message)
     }
 }
 
-private static int InputNumber(string message, int min, int max)
+static int InputNumber(string message, int min, int max)
 {
     while (true)
     {
         Console.Write(message);
-        string input = Console.ReadLine();
+        string input = Console.ReadLine() ?? ""; // Added ?? "" to fix nullable warning
         if (int.TryParse(input, out int number))
         {
             if (number >= min && number <= max) return number;
-            Console.WriteLine($"Error: Number must be between {min} and {max} (negative numbers are not allowed)!");
+            Console.WriteLine($"Error: Number must be between {min} and {max}!");
         }
         else
         {
